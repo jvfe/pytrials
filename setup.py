@@ -10,8 +10,6 @@ with open('README.rst') as readme_file:
 with open('HISTORY.rst') as history_file:
     history = history_file.read()
 
-requirements = ['Click>=7.0', ]
-
 setup_requirements = ['pytest-runner', ]
 
 test_requirements = ['pytest>=3', ]
@@ -32,12 +30,7 @@ setup(
         'Programming Language :: Python :: 3.8',
     ],
     description="Python wrapper around the clinicaltrials.gov API",
-    entry_points={
-        'console_scripts': [
-            'pytrials=pytrials.cli:main',
-        ],
-    },
-    install_requires=requirements,
+    install_requires=find_packages(),
     license="BSD license",
     long_description=readme + '\n\n' + history,
     include_package_data=True,

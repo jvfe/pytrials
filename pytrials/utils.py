@@ -1,9 +1,11 @@
+"""Basic utilities module"""
 import requests
 import csv
 import re
 
 
 def request_ct(url):
+    """Performs a get requests that provides a (somewhat) useful error message."""
     try:
         response = requests.get(url)
     except:
@@ -15,18 +17,18 @@ def request_ct(url):
 
 
 def json_handler(url):
+    """Returns request in JSON (dict) format"""
     return request_ct(url).json()
 
 
 def csv_handler(url):
-
-    # https://stackoverflow.com/questions/35371043/use-python-requests-to-download-csv
+    """Returns request in CSV (list of records) format"""
 
     response = request_ct(url)
     decoded_content = response.content.decode("utf-8")
-    split_by_blank = re.split("\n\s*\n", decoded_content)  # Divides header info
+
+    split_by_blank = re.split(r"\n\s*\n", decoded_content)  # Extracts header info
     cr = csv.reader(split_by_blank[1].splitlines(), delimiter=",")
     records = list(cr)
 
     return records
-
