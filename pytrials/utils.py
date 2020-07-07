@@ -1,5 +1,6 @@
 import requests
 import csv
+import re
 
 
 def json_handler(url):
@@ -26,13 +27,8 @@ def csv_handler(url):
         )
     else:
         decoded_content = response.content.decode("utf-8")
-        cr = csv.reader(decoded_content.splitlines(), delimiter=",")
-        records = list(cr)[10:]  # Skips header info
+        split_by_blank = re.split('\n\s*\n', decoded_content) # Divides header info
+        cr = csv.reader(split_by_blank[1].splitlines(), delimiter=",")
+        records = list(cr)
 
         return records
-
-
-# import pandas as pd
-
-# df = pd.DataFrame.from_records(my_list[1:], columns=my_list[0])
-# print(df)
