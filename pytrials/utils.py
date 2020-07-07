@@ -5,7 +5,7 @@ import re
 
 
 def request_ct(url):
-    """Performs a get requests that provides a (somewhat) useful error message."""
+    """Performs a get request that provides a (somewhat) useful error message."""
     try:
         response = requests.get(url)
     except:

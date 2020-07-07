@@ -73,7 +73,7 @@ class ClinicalTrials:
         """Returns study content for specified fields
         
         Retrieves information from the study fields endpoint, which acquires specified information 
-        from a large (max 1000) studies. To see a list of all possible fields, check the classes' 
+        from a large (max 1000) studies. To see a list of all possible fields, check the class' 
         study_fields attribute.
 
         Args:
