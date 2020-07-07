@@ -16,17 +16,38 @@ pytrials
 
 
 
-Python wrapper around the clinicaltrials.gov API
+Python wrapper around the clinicaltrials.gov API.
+Documentation for the api can be found here: https://clinicaltrials.gov/api/
 
 
 * Free software: BSD license
 * Documentation: https://pytrials.readthedocs.io.
 
 
-Features
+Tutorial
 --------
+To install::
 
-* TODO
+    $ pip install pytrials
+
+Basic Usage
+^^^^^^^^^^^
+::
+
+    from pytrials.client import ClinicalTrials
+    
+    ct = ClinicalTrials()
+    
+    # Get 50 full studies related to Coronavirus and COVID in json format.
+    ct.get_full_studies(search_expr="Coronavirus+COVID", max_studies=50)
+
+    # Get the NCTId, Condition and Brief title fields from 500 studies related to Coronavirus and Covid, in csv format.
+    ct.get_study_fields(
+        search_expr="Coronavirus+COVID",
+        fields=["NCTId", "Condition", "BriefTitle"],
+        max_studies=500,
+        fmt="csv",
+    )
 
 Credits
 -------
