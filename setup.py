@@ -29,7 +29,7 @@ setup(
         'Programming Language :: Python :: 3.8',
     ],
     description="Python wrapper around the clinicaltrials.gov API",
-    install_requires=find_packages(),
+    install_requires=["requests"],
     license="BSD license",
     long_description=readme + '\n\n' + history,
     include_package_data=True,
