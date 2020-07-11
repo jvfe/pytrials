@@ -6,3 +6,8 @@ History
 ------------------
 
 * First release on PyPI.
+
+0.1.2 (2020-07-11)
+------------------
+
+* Minor fixes
