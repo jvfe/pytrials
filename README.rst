@@ -8,7 +8,10 @@ pytrials
 
 .. image:: https://img.shields.io/travis/jvfe/pytrials.svg
         :target: https://travis-ci.com/jvfe/pytrials
-
+        
+.. image:: https://img.shields.io/pypi/l/pytrials
+        :target: https://github.com/jvfe/pytrials/blob/master/LICENSE
+        
 .. image:: https://readthedocs.org/projects/pytrials/badge/?version=latest
         :target: https://pytrials.readthedocs.io/en/latest/?badge=latest
         :alt: Documentation Status
