@@ -12,30 +12,28 @@ class ClinicalTrials:
         api_info: Tuple containing the API version number and the last time the database was updated.
     """
 
-    BASE_URL = "https://clinicaltrials.gov/api/"
-    INFO = "info/"
-    QUERY = "query/"
+    _BASE_URL = "https://clinicaltrials.gov/api/"
+    _INFO = "info/"
+    _QUERY = "query/"
     _JSON = "fmt=json"
     _CSV = "fmt=csv"
 
     def __init__(self):
-
-        self.study_fields = self.__list_fields()
         self.api_info = self.__api_info()
 
-    def __list_fields(self):
-        """Returns the study fields list"""
+    @property
+    def study_fields(self):
         fields_list = json_handler(
-            f"{self.BASE_URL}{self.INFO}study_fields_list?{self._JSON}"
+            f"{self._BASE_URL}{self._INFO}study_fields_list?{self._JSON}"
         )
         return fields_list["StudyFields"]["Fields"]
 
     def __api_info(self):
         """Returns information about the API"""
-        last_updated = json_handler(f"{self.BASE_URL}{self.INFO}data_vrs?{self._JSON}")[
-            "DataVrs"
-        ]
-        api_version = json_handler(f"{self.BASE_URL}{self.INFO}api_vrs?{self._JSON}")[
+        last_updated = json_handler(
+            f"{self._BASE_URL}{self._INFO}data_vrs?{self._JSON}"
+        )["DataVrs"]
+        api_version = json_handler(f"{self._BASE_URL}{self._INFO}api_vrs?{self._JSON}")[
             "APIVrs"
         ]
 
@@ -65,7 +63,7 @@ class ClinicalTrials:
 
         req = f"full_studies?expr={search_expr}&max_rnk={max_studies}&{self._JSON}"
 
-        full_studies = json_handler(f"{self.BASE_URL}{self.QUERY}{req}")
+        full_studies = json_handler(f"{self._BASE_URL}{self._QUERY}{req}")
 
         return full_studies
 
@@ -104,11 +102,11 @@ class ClinicalTrials:
             concat_fields = ",".join(fields)
             req = f"study_fields?expr={search_expr}&max_rnk={max_studies}&fields={concat_fields}"
             if fmt == "csv":
-                url = f"{self.BASE_URL}{self.QUERY}{req}&{self._CSV}"
+                url = f"{self._BASE_URL}{self._QUERY}{req}&{self._CSV}"
                 return csv_handler(url)
 
             elif fmt == "json":
-                url = f"{self.BASE_URL}{self.QUERY}{req}&{self._JSON}"
+                url = f"{self._BASE_URL}{self._QUERY}{req}&{self._JSON}"
                 return json_handler(url)
 
             else:
