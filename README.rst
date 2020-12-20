@@ -6,12 +6,12 @@ pytrials
 .. image:: https://img.shields.io/pypi/v/pytrials.svg
         :target: https://pypi.python.org/pypi/pytrials
 
-.. image:: https://img.shields.io/travis/jvfe/pytrials.svg
-        :target: https://travis-ci.com/jvfe/pytrials
-        
+.. image:: https://github.com/jvfe/pytrials/workflows/pytest/badge.svg
+        :target: https://github.com/jvfe/pytrials/actions
+
 .. image:: https://img.shields.io/pypi/l/pytrials
         :target: https://github.com/jvfe/pytrials/blob/master/LICENSE
-        
+
 .. image:: https://readthedocs.org/projects/pytrials/badge/?version=latest
         :target: https://pytrials.readthedocs.io/en/latest/?badge=latest
         :alt: Documentation Status
@@ -38,9 +38,9 @@ Basic Usage
 ::
 
     from pytrials.client import ClinicalTrials
-    
+
     ct = ClinicalTrials()
-    
+
     # Get 50 full studies related to Coronavirus and COVID in json format.
     ct.get_full_studies(search_expr="Coronavirus+COVID", max_studies=50)
 
@@ -51,10 +51,10 @@ Basic Usage
         max_studies=500,
         fmt="csv",
     )
-    
+
     # Read the csv data in Pandas
     import pandas as pd
-    
+
     pd.DataFrame.from_records(corona_fields[1:], columns=corona_fields[0])
 
 Credits
