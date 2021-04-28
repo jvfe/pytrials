@@ -1,4 +1,3 @@
-# import pytest
 from pytest import raises
 from pytrials.utils import request_ct
 
