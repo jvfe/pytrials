@@ -114,14 +114,25 @@ class ClinicalTrials:
             else:
                 raise ValueError("Format argument has to be either 'csv' or 'json'")
 
-    def get_study_count(self, search_expr, fields=["NCTId"]):
-        if not set(fields).issubset(self.study_fields):
-            raise ValueError(
-                "One of the fields is not valid! Check the study_fields attribute for a list of valid ones."
-            )
+    def get_study_count(self, search_expr):
+        """Returns study count for specified search expression
+
+        Retrieves the count of studies matching the text entered in search_expr. 
+
+        Args:
+            search_expr (str): A string containing a search expression as specified by
+                `their documentation <https://clinicaltrials.gov/api/gui/ref/syntax#searchExpr>`_.
+
+        Returns:
+            An integer
+            
+        Raises:
+            ValueError: The search expression cannot be blank.
+        """
+        if not set(search_expr):
+            raise ValueError("The search expression cannot be blank.")
         else:
-            concat_fields = ",".join(fields)
-            req = f"study_fields?expr={search_expr}&max_rnk=1&fields={concat_fields}"
+            req = f"study_fields?expr={search_expr}&max_rnk=1&fields=NCTId"
             url = f"{self._BASE_URL}{self._QUERY}{req}&{self._JSON}"
             returned_data = json_handler(url)
             study_count = returned_data['StudyFieldsResponse']['NStudiesFound']
