@@ -25,16 +25,16 @@ test_requirements = [
 setup(
     author="João Vitor F. Cavalcante",
     author_email="jvfe@ufrn.edu.br",
-    python_requires=">=3.6",
+    python_requires=">=3.7",
     classifiers=[
         "Development Status :: 2 - Pre-Alpha",
         "Intended Audience :: Developers",
         "License :: OSI Approved :: BSD License",
         "Natural Language :: English",
         "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9",
     ],
     description="Python wrapper around the clinicaltrials.gov API",
     install_requires=install_requirements,
@@ -48,6 +48,6 @@ setup(
     test_suite="tests",
     tests_require=test_requirements,
     url="https://github.com/jvfe/pytrials",
-    version='0.1.2',
+    version="0.1.2",
     zip_safe=False,
 )

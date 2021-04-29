@@ -20,7 +20,7 @@ pytrials
 
 
 Python wrapper around the clinicaltrials.gov API.
-Documentation for the api can be found here: https://clinicaltrials.gov/api/
+Documentation for the API can be found here: https://clinicaltrials.gov/api/
 
 
 * Free software: BSD license
