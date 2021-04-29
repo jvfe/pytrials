@@ -9,7 +9,7 @@ def request_ct(url):
     try:
         response = requests.get(url)
     except ImportError:
-        raise IOError(
+        raise ImportError(
             "Couldn't retrieve the data, check your search expression or try again later."
         )
     else:
