@@ -10,4 +10,4 @@ Development Lead
 Contributors
 ------------
 
-None yet. Why not be the first?
+* Aldo A. Adriazola <a3dev@outlook.com>

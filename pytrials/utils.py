@@ -8,7 +8,7 @@ def request_ct(url):
     """Performs a get request that provides a (somewhat) useful error message."""
     try:
         response = requests.get(url)
-    except:
+    except ImportError:
         raise IOError(
             "Couldn't retrieve the data, check your search expression or try again later."
         )

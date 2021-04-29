@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
 """Tests for `pytrials` package."""
-import pytest
 from pytest import raises
 from pytrials.client import ClinicalTrials
 
@@ -45,7 +44,7 @@ def test_study_fields_json():
 
 
 def test_study_fake_fields():
-    with raises(ValueError) as invalid_field:
+    with raises(ValueError):
         ct.get_study_fields(
             search_expr="Coronavirus+COVID",
             fields=["NCTId", "I AM NOT A REAL FIELD"],
@@ -55,10 +54,16 @@ def test_study_fake_fields():
 
 
 def test_study_fake_fmt():
-    with raises(ValueError) as invalid_fmt:
+    with raises(ValueError):
         ct.get_study_fields(
             search_expr="Coronavirus+COVID",
             fields=["NCTId", "BriefTitle"],
             max_studies=50,
             fmt="I AM NOT A REAL FORMAT",
         )
+
+
+def test_study_count():
+    ct.get_study_count(
+        search_expr="Coronavirus+COVID"
+    )
