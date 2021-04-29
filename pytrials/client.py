@@ -117,7 +117,7 @@ class ClinicalTrials:
     def get_study_count(self, search_expr):
         """Returns study count for specified search expression
 
-        Retrieves the count of studies matching the text entered in search_expr. 
+        Retrieves the count of studies matching the text entered in search_expr.
 
         Args:
             search_expr (str): A string containing a search expression as specified by
@@ -125,7 +125,7 @@ class ClinicalTrials:
 
         Returns:
             An integer
-            
+
         Raises:
             ValueError: The search expression cannot be blank.
         """
@@ -135,7 +135,7 @@ class ClinicalTrials:
             req = f"study_fields?expr={search_expr}&max_rnk=1&fields=NCTId"
             url = f"{self._BASE_URL}{self._QUERY}{req}&{self._JSON}"
             returned_data = json_handler(url)
-            study_count = returned_data['StudyFieldsResponse']['NStudiesFound']
+            study_count = returned_data["StudyFieldsResponse"]["NStudiesFound"]
             return study_count
 
     def __repr__(self):

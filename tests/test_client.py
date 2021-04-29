@@ -64,6 +64,4 @@ def test_study_fake_fmt():
 
 
 def test_study_count():
-    ct.get_study_count(
-        search_expr="Coronavirus+COVID"
-    )
+    ct.get_study_count(search_expr="Coronavirus+COVID")
