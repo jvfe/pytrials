@@ -15,4 +15,5 @@ History
 0.2.0 (2021-04-24)
 ------------------
 
-* added get_study_count function
+* Improved test suite
+* Added get_study_count function
