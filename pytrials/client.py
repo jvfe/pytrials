@@ -69,7 +69,7 @@ class ClinicalTrials:
 
         return full_studies
 
-    def get_study_fields(self, search_expr, fields, max_studies=50, fmt="csv"):
+    def get_study_fields(self, search_expr, fields, max_studies=50, min_rnk=1,fmt="csv"):
         """Returns study content for specified fields
 
         Retrieves information from the study fields endpoint, which acquires specified information
@@ -102,7 +102,7 @@ class ClinicalTrials:
             )
         else:
             concat_fields = ",".join(fields)
-            req = f"study_fields?expr={search_expr}&max_rnk={max_studies}&fields={concat_fields}"
+            req = f"study_fields?expr={search_expr}&min_rnk={min_rnk}&max_rnk={max_studies+min_rnk-1}&fields={concat_fields}"
             if fmt == "csv":
                 url = f"{self._BASE_URL}{self._QUERY}{req}&{self._CSV}"
                 return csv_handler(url)
