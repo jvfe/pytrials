@@ -5,7 +5,7 @@ import re
 from func_timeout import func_timeout, FunctionTimedOut
 
 
-def request_ct(url, timer=5, retries=3):
+def request_ct(url, timer=2, retries=3):
     """
     Performs a get request that provides (somewhat) useful error messages.
     If the request isn't successful within the time interval set in timer (seconds),
@@ -58,12 +58,12 @@ def request_ct(url, timer=5, retries=3):
     return response
 
 
-def json_handler(url, timer=5, retries=3):
+def json_handler(url, timer=2, retries=3):
     """Returns request in JSON (dict) format"""
     return request_ct(url, timer=timer, retries=retries).json()
 
 
-def csv_handler(url, timer=5, retries=3):
+def csv_handler(url, timer=2, retries=3):
     """Returns request in CSV (list of records) format"""
 
     response = request_ct(url, timer=timer, retries=retries)
