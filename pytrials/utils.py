@@ -8,6 +8,9 @@ def request_ct(url):
     """Performs a get request that provides a (somewhat) useful error message."""
     try:
         response = requests.get(url)
+        response.raise_for_status()
+    except requests.HTTPError as ex:
+        raise ex
     except ImportError:
         raise ImportError(
             "Couldn't retrieve the data, check your search expression or try again later."
