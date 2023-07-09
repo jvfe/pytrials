@@ -41,7 +41,7 @@ class ClinicalTrials:
 
         return api_version, last_updated
 
-    def get_full_studies(self, search_expr, max_studies=50):
+    def get_full_studies(self, search_expr, max_studies=50, timer=2, retries=3):
         """Returns all content for a maximum of 100 study records.
 
         Retrieves information from the full studies endpoint, which gets all study fields.
@@ -65,11 +65,14 @@ class ClinicalTrials:
 
         req = f"full_studies?expr={search_expr}&max_rnk={max_studies}&{self._JSON}"
 
-        full_studies = json_handler(f"{self._BASE_URL}{self._QUERY}{req}")
+        full_studies = json_handler(
+            f"{self._BASE_URL}{self._QUERY}{req}",
+            timer=timer, retries=retries
+            )
 
         return full_studies
 
-    def get_study_fields(self, search_expr, fields, max_studies=50, fmt="csv"):
+    def get_study_fields(self, search_expr, fields, max_studies=50, fmt="csv", timer=2, retries=3):
         """Returns study content for specified fields
 
         Retrieves information from the study fields endpoint, which acquires specified information
@@ -105,16 +108,16 @@ class ClinicalTrials:
             req = f"study_fields?expr={search_expr}&max_rnk={max_studies}&fields={concat_fields}"
             if fmt == "csv":
                 url = f"{self._BASE_URL}{self._QUERY}{req}&{self._CSV}"
-                return csv_handler(url)
+                return csv_handler(url, timer=timer, retries=retries)
 
             elif fmt == "json":
                 url = f"{self._BASE_URL}{self._QUERY}{req}&{self._JSON}"
-                return json_handler(url)
+                return json_handler(url, timer=timer, retries=retries)
 
             else:
                 raise ValueError("Format argument has to be either 'csv' or 'json'")
 
-    def get_study_count(self, search_expr):
+    def get_study_count(self, search_expr, timer=2, retries=3):
         """Returns study count for specified search expression
 
         Retrieves the count of studies matching the text entered in search_expr.
@@ -134,7 +137,7 @@ class ClinicalTrials:
         else:
             req = f"study_fields?expr={search_expr}&max_rnk=1&fields=NCTId"
             url = f"{self._BASE_URL}{self._QUERY}{req}&{self._JSON}"
-            returned_data = json_handler(url)
+            returned_data = json_handler(url, timer=timer, retries=retries)
             study_count = returned_data["StudyFieldsResponse"]["NStudiesFound"]
             return study_count
 
