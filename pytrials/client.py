@@ -14,7 +14,7 @@ class ClinicalTrials:
         time the database was updated.
     """
 
-    _BASE_URL = "https://clinicaltrials.gov/api/"
+    _BASE_URL = "https://classic.clinicaltrials.gov/api/"
     _INFO = "info/"
     _QUERY = "query/"
     _JSON = "fmt=json"
