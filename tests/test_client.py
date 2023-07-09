@@ -10,6 +10,10 @@ ct = ClinicalTrials()
 def test_full_studies():
     fifty_studies = ct.get_full_studies(search_expr="Coronavirus+COVID", max_studies=50)
 
+    assert len(fifty_studies) == 1
+
+    fifty_studies = fifty_studies[0]
+
     assert [*fifty_studies["FullStudiesResponse"].keys()] == [
         "APIVrs",
         "DataVrs",
@@ -29,6 +33,10 @@ def test_full_studies_max():
     hundred_studies = ct.get_full_studies(
         search_expr="Coronavirus+COVID", max_studies=100
     )
+
+    assert len(hundred_studies) == 1
+
+    hundred_studies = hundred_studies[0]
 
     assert [*hundred_studies["FullStudiesResponse"].keys()] == [
         "APIVrs",
@@ -51,8 +59,15 @@ def test_full_studies_below():
 
 
 def test_full_studies_above():
-    with raises(ValueError):
-        ct.get_full_studies(search_expr="Coronavirus+COVID", max_studies=150)
+    hundred_fifty_studies = ct.get_full_studies(
+        search_expr="Coronavirus+COVID", max_studies=150
+    )
+
+    n = 0
+    for r in hundred_fifty_studies:
+        n += len(r["FullStudiesResponse"]["FullStudies"])
+
+    assert n == 150
 
 
 def test_study_fields_csv():
