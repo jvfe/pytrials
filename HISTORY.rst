@@ -23,3 +23,8 @@ History
 
 * Add classic prefix to url - #10
 * Raise error if API status is not ok - #11
+
+0.3.0 (2023-07-09)
+------------------
+
+* Add min_rnk option to get_study_fields - #12

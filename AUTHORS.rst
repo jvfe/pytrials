@@ -11,3 +11,5 @@ Contributors
 ------------
 
 * Aldo A. Adriazola <a3dev@outlook.com>
+* Nicolas Rinn <@nicorinn>
+* dzanadvornykh <@dzanadvornykh>
