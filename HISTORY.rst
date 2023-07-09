@@ -17,3 +17,9 @@ History
 
 * Improved test suite
 * Added get_study_count function
+
+0.2.1 (2023-07-09)
+------------------
+
+* Add classic prefix to url - #10
+* Raise error if API status is not ok - #11
