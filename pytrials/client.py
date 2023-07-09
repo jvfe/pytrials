@@ -5,7 +5,7 @@ class ClinicalTrials:
     """ClinicalTrials API client
 
     Provides functions to easily access the ClinicalTrials.gov API
-    (https://clinicaltrials.gov/api/)
+    (https://classic.clinicaltrials.gov/api/)
     in Python.
 
     Attributes:
@@ -69,7 +69,7 @@ class ClinicalTrials:
 
         return full_studies
 
-    def get_study_fields(self, search_expr, fields, max_studies=50, fmt="csv"):
+    def get_study_fields(self, search_expr, fields, max_studies=50, min_rnk=1, fmt="csv"):
         """Returns study content for specified fields
 
         Retrieves information from the study fields endpoint, which acquires specified information
@@ -82,6 +82,8 @@ class ClinicalTrials:
             fields (list(str)): A list containing the desired information fields.
             max_studies (int): An integer indicating the maximum number of studies to return.
                 Defaults to 50.
+            min_rnk (int): Minimum Rank sets the lower limit on the range of study records used to return results.
+                If absent, defaults to 1.
             fmt (str): A string indicating the output format, csv or json. Defaults to csv.
 
         Returns:
@@ -102,7 +104,7 @@ class ClinicalTrials:
             )
         else:
             concat_fields = ",".join(fields)
-            req = f"study_fields?expr={search_expr}&max_rnk={max_studies}&fields={concat_fields}"
+            req = f"study_fields?expr={search_expr}&min_rnk={min_rnk}&max_rnk={max_studies+min_rnk-1}&fields={concat_fields}"
             if fmt == "csv":
                 url = f"{self._BASE_URL}{self._QUERY}{req}&{self._CSV}"
                 return csv_handler(url)
