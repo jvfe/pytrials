@@ -41,8 +41,8 @@ class ClinicalTrials:
 
         return api_version, last_updated
 
-    def get_full_studies(self, search_expr, max_studies=50):
-        """Returns all content for a maximum of 100 study records.
+    def get_full_studies(self, search_expr, max_studies=None):
+        """Returns all content for a maximum of `max_studies` study records.
 
         Retrieves information from the full studies endpoint, which gets all study fields.
         This endpoint can only output JSON (Or not-supported XML) format and does not allow
@@ -51,21 +51,51 @@ class ClinicalTrials:
         Args:
             search_expr (str): A string containing a search expression as specified by
                 `their documentation <https://clinicaltrials.gov/api/gui/ref/syntax#searchExpr>`_.
-            max_studies (int): An integer indicating the maximum number of studies to return.
-                Defaults to 50.
+            max_studies (int; optional): An integer indicating the maximum number of studies to return.
+                Defaults to None, resulting in all studies being returned.
 
         Returns:
-            dict: Object containing the information queried with the search expression.
+            list: List of responses containing the information queried with the search expression.
 
         Raises:
             ValueError: The number of studies can only be between 1 and 100
         """
-        if max_studies > 100 or max_studies < 1:
-            raise ValueError("The number of studies can only be between 1 and 100")
+        if max_studies is not None and max_studies < 1:
+            raise ValueError("The number of studies must be at least 1")
 
-        req = f"full_studies?expr={search_expr}&max_rnk={max_studies}&{self._JSON}"
+        min_rnk = 1
+        max_rnk = 100 if max_studies is None else min(100, max_studies)
+        req = "full_studies?expr={}&min_rnk={}&max_rnk={}&{}"
 
-        full_studies = json_handler(f"{self._BASE_URL}{self._QUERY}{req}")
+        full_studies = list()
+
+        reqf = req.format(search_expr, min_rnk, max_rnk, self._JSON)
+        full_studies.append(json_handler(f"{self._BASE_URL}{self._QUERY}{reqf}"))
+
+        if max_studies is None or max_studies > 100:
+
+            n_studies_found = full_studies[0]["FullStudiesResponse"]["NStudiesFound"]
+
+            min_rnk += 100
+            max_rnk += 100
+
+            while_stop = (
+                n_studies_found
+                if max_studies is None
+                else min(max_studies, n_studies_found)
+            )
+            max_rnk = min(n_studies_found, max_rnk, while_stop)
+
+            print(while_stop)
+            while min_rnk <= while_stop:
+                print(max_rnk)
+                reqf = req.format(search_expr, min_rnk, max_rnk, self._JSON)
+                full_studies.append(
+                    json_handler(f"{self._BASE_URL}{self._QUERY}{reqf}")
+                )
+                min_rnk += 100
+                max_rnk += 100
+                max_rnk = min(while_stop, max_rnk)
 
         return full_studies
 
