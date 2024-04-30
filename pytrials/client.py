@@ -14,7 +14,7 @@ class ClinicalTrials:
         time the database was updated.
     """
 
-    _BASE_URL = "https://classic.clinicaltrials.gov/api/"
+    _BASE_URL = "https://clinicaltrials.gov/api/v2/"
     _INFO = "info/"
     _QUERY = "query/"
     _JSON = "fmt=json"
@@ -32,12 +32,12 @@ class ClinicalTrials:
 
     def __api_info(self):
         """Returns information about the API"""
-        last_updated = json_handler(
-            f"{self._BASE_URL}{self._INFO}data_vrs?{self._JSON}"
-        )["DataVrs"]
-        api_version = json_handler(f"{self._BASE_URL}{self._INFO}api_vrs?{self._JSON}")[
-            "APIVrs"
-        ]
+        req = json_handler(
+            f"{self._BASE_URL}version"
+        )
+        last_updated = req["dataTimestamp"]
+
+        api_version = req["apiVersion"]
 
         return api_version, last_updated
 
