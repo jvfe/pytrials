@@ -49,7 +49,7 @@ class ClinicalTrials:
 
         return api_version, last_updated
 
-    def get_full_studies(self, search_expr, max_studies=50):
+    def get_full_studies(self, search_expr, max_studies=50, fmt="csv"):
         """Returns all content for a maximum of 100 study records.
 
         Retrieves information from the full studies endpoint, which gets all study fields.
@@ -68,12 +68,21 @@ class ClinicalTrials:
         Raises:
             ValueError: The number of studies can only be between 1 and 100
         """
+        if fmt == "csv":
+            format = self._CSV
+            handler = csv_handler
+        elif fmt == "json":
+            format = self._JSON
+            handler = json_handler
+        else:
+            raise ValueError("Format argument has to be either 'csv' or 'json")
+
         if max_studies > 1000 or max_studies < 1:
             raise ValueError("The number of studies can only be between 1 and 1000")
 
-        req = f"studies?{self._JSON}&markupFormat=legacy&query.term={search_expr}&pageSize={max_studies}"
+        req = f"studies?{format}&markupFormat=legacy&query.term={search_expr}&pageSize={max_studies}"
 
-        full_studies = json_handler(f"{self._BASE_URL}{req}")
+        full_studies = handler(f"{self._BASE_URL}{req}")
 
         return full_studies
 

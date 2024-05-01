@@ -41,7 +41,7 @@ Basic Usage
 
     ct = ClinicalTrials()
 
-    # Get 50 full studies related to Coronavirus and COVID in json format.
+    # Get 50 full studies related to Coronavirus and COVID in csv format.
     ct.get_full_studies(search_expr="Coronavirus+COVID", max_studies=50)
 
     # Get the NCTId, Condition and Brief title fields from 1000 studies related to Coronavirus and Covid, in csv format.
