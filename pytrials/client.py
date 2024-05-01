@@ -106,6 +106,15 @@ class ClinicalTrials:
                 for a list of valid ones.
             ValueError: Format argument has to be either 'csv' or 'json'
         """
+        if fmt == "csv":
+            format = self._CSV
+            handler = csv_handler
+        elif fmt == "json":
+            format = self._JSON
+            handler = json_handler
+        else:
+            raise ValueError("Format argument has to be either 'csv' or 'json")
+
         if max_studies > 1000 or max_studies < 1:
             raise ValueError("The number of studies can only be between 1 and 1000")
         elif not set(fields).issubset(self.study_fields[fmt]):
@@ -117,16 +126,8 @@ class ClinicalTrials:
         else:
             concat_fields = "|".join(fields)
             req = f"&query.term={search_expr}&markupFormat=legacy&fields={concat_fields}&pageSize={max_studies}"
-            if fmt == "csv":
-                url = f"{self._BASE_URL}studies?{self._CSV}{req}"
-                return csv_handler(url)
-
-            elif fmt == "json":
-                url = f"{self._BASE_URL}studies?{self._JSON}{req}"
-                return json_handler(url)
-
-            else:
-                raise ValueError("Format argument has to be either 'csv' or 'json'")
+            url = f"{self._BASE_URL}studies?{format}{req}"
+            return handler(url)
 
     def get_study_count(self, search_expr):
         """Returns study count for specified search expression
