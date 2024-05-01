@@ -129,29 +129,5 @@ class ClinicalTrials:
             url = f"{self._BASE_URL}studies?{format}{req}"
             return handler(url)
 
-    def get_study_count(self, search_expr):
-        """Returns study count for specified search expression
-
-        Retrieves the count of studies matching the text entered in search_expr.
-
-        Args:
-            search_expr (str): A string containing a search expression as specified by
-                `their documentation <https://clinicaltrials.gov/api/gui/ref/syntax#searchExpr>`_.
-
-        Returns:
-            An integer
-
-        Raises:
-            ValueError: The search expression cannot be blank.
-        """
-        if not set(search_expr):
-            raise ValueError("The search expression cannot be blank.")
-        else:
-            req = f"study_fields?expr={search_expr}&max_rnk=1&fields=NCTId"
-            url = f"{self._BASE_URL}{self._QUERY}{req}&{self._JSON}"
-            returned_data = json_handler(url)
-            study_count = returned_data["StudyFieldsResponse"]["NStudiesFound"]
-            return study_count
-
     def __repr__(self):
         return f"ClinicalTrials.gov client v{self.api_info[0]}, database last updated {self.api_info[1]}"
