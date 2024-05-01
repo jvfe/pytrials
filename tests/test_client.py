@@ -8,41 +8,31 @@ ct = ClinicalTrials()
 
 
 def test_full_studies():
-    fifty_studies = ct.get_full_studies(search_expr="Coronavirus+COVID", max_studies=50)
+    fifty_studies = ct.get_full_studies(
+        search_expr="Coronavirus+COVID", max_studies=50, fmt="json"
+    )
 
-    assert [*fifty_studies["FullStudiesResponse"].keys()] == [
-        "APIVrs",
-        "DataVrs",
-        "Expression",
-        "NStudiesAvail",
-        "NStudiesFound",
-        "MinRank",
-        "MaxRank",
-        "NStudiesReturned",
-        "FullStudies",
+    assert [*fifty_studies["studies"][0].keys()] == [
+        "protocolSection",
+        "derivedSection",
+        "hasResults",
     ]
 
-    assert len(fifty_studies["FullStudiesResponse"]["FullStudies"]) == 50
+    assert len(fifty_studies["studies"]) == 50
 
 
 def test_full_studies_max():
     hundred_studies = ct.get_full_studies(
-        search_expr="Coronavirus+COVID", max_studies=100
+        search_expr="Coronavirus+COVID", max_studies=100, fmt="json"
     )
 
-    assert [*hundred_studies["FullStudiesResponse"].keys()] == [
-        "APIVrs",
-        "DataVrs",
-        "Expression",
-        "NStudiesAvail",
-        "NStudiesFound",
-        "MinRank",
-        "MaxRank",
-        "NStudiesReturned",
-        "FullStudies",
+    assert [*hundred_studies["studies"][0].keys()] == [
+        "protocolSection",
+        "derivedSection",
+        "hasResults",
     ]
 
-    assert len(hundred_studies["FullStudiesResponse"]["FullStudies"]) == 100
+    assert len(hundred_studies["studies"]) == 100
 
 
 def test_full_studies_below():
@@ -75,20 +65,16 @@ def test_study_fields_json():
         fmt="json",
     )
 
-    assert [*study_fields_json["StudyFieldsResponse"].keys()] == [
-        "APIVrs",
-        "DataVrs",
-        "Expression",
-        "NStudiesAvail",
-        "NStudiesFound",
-        "MinRank",
-        "MaxRank",
-        "NStudiesReturned",
-        "FieldList",
-        "StudyFields",
+    assert [
+        *study_fields_json["studies"][0]["protocolSection"][
+            "identificationModule"
+        ].keys()
+    ] == [
+        "nctId",
+        "briefTitle",
     ]
 
-    assert len(study_fields_json["StudyFieldsResponse"]["StudyFields"]) == 50
+    assert len(study_fields_json["studies"]) == 50
 
 
 def test_study_fake_fields():
