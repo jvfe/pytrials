@@ -17,8 +17,6 @@ class ClinicalTrials:
     """
 
     _BASE_URL = "https://clinicaltrials.gov/api/v2/"
-    _INFO = "info/"
-    _QUERY = "query/"
     _JSON = "format=json"
     _CSV = "format=csv"
 
@@ -70,16 +68,18 @@ class ClinicalTrials:
         Raises:
             ValueError: The number of studies can only be between 1 and 100
         """
-        if max_studies > 100 or max_studies < 1:
-            raise ValueError("The number of studies can only be between 1 and 100")
+        if max_studies > 1000 or max_studies < 1:
+            raise ValueError("The number of studies can only be between 1 and 1000")
 
-        req = f"full_studies?expr={search_expr}&max_rnk={max_studies}&{self._JSON}"
+        req = f"studies?{self._JSON}&markupFormat=legacy&query.term={search_expr}&pageSize={max_studies}"
 
-        full_studies = json_handler(f"{self._BASE_URL}{self._QUERY}{req}")
+        full_studies = json_handler(f"{self._BASE_URL}{req}")
 
         return full_studies
 
-    def get_study_fields(self, search_expr, fields, max_studies=50, min_rnk=1, fmt="csv"):
+    def get_study_fields(
+        self, search_expr, fields, max_studies=50, fmt="csv"
+    ):
         """Returns study content for specified fields
 
         Retrieves information from the study fields endpoint, which acquires specified information
@@ -108,19 +108,19 @@ class ClinicalTrials:
         """
         if max_studies > 1000 or max_studies < 1:
             raise ValueError("The number of studies can only be between 1 and 1000")
-        elif not set(fields).issubset(self.study_fields):
+        elif not set(fields).issubset(self.study_fields[fmt]):
             raise ValueError(
                 "One of the fields is not valid! Check the study_fields attribute for a list of valid ones."
             )
         else:
-            concat_fields = ",".join(fields)
-            req = f"study_fields?expr={search_expr}&min_rnk={min_rnk}&max_rnk={max_studies+min_rnk-1}&fields={concat_fields}"
+            concat_fields = "|".join(fields)
+            req = f"&query.term={search_expr}&markupFormat=legacy&fields={concat_fields}&pageSize={max_studies}"
             if fmt == "csv":
-                url = f"{self._BASE_URL}{self._QUERY}{req}&{self._CSV}"
+                url = f"{self._BASE_URL}studies?{self._CSV}{req}"
                 return csv_handler(url)
 
             elif fmt == "json":
-                url = f"{self._BASE_URL}{self._QUERY}{req}&{self._JSON}"
+                url = f"{self._BASE_URL}studies?{self._JSON}{req}"
                 return json_handler(url)
 
             else:

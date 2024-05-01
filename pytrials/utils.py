@@ -30,8 +30,7 @@ def csv_handler(url):
     response = request_ct(url)
     decoded_content = response.content.decode("utf-8")
 
-    split_by_blank = re.split(r"\n\s*\n", decoded_content)  # Extracts header info
-    cr = csv.reader(split_by_blank[1].splitlines(), delimiter=",")
+    cr = csv.reader(decoded_content.splitlines(), delimiter=",")
     records = list(cr)
 
     return records
