@@ -52,19 +52,19 @@ def test_full_studies_below():
 
 def test_full_studies_above():
     with raises(ValueError):
-        ct.get_full_studies(search_expr="Coronavirus+COVID", max_studies=150)
+        ct.get_full_studies(search_expr="Coronavirus+COVID", max_studies=2000)
 
 
 def test_study_fields_csv():
     study_fields_csv = ct.get_study_fields(
         search_expr="Coronavirus+COVID",
-        fields=["NCTId", "Condition", "BriefTitle"],
+        fields=["NCT Number", "Conditions", "Study Title"],
         max_studies=50,
         fmt="csv",
     )
 
     assert len(study_fields_csv) == 51
-    assert study_fields_csv[0] == ["Rank", "NCTId", "Condition", "BriefTitle"]
+    assert study_fields_csv[0] == ["NCT Number", "Study Title", "Conditions"]
 
 
 def test_study_fields_json():
