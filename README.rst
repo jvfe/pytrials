@@ -44,11 +44,11 @@ Basic Usage
     # Get 50 full studies related to Coronavirus and COVID in json format.
     ct.get_full_studies(search_expr="Coronavirus+COVID", max_studies=50)
 
-    # Get the NCTId, Condition and Brief title fields from 500 studies related to Coronavirus and Covid, in csv format.
+    # Get the NCTId, Condition and Brief title fields from 1000 studies related to Coronavirus and Covid, in csv format.
     corona_fields = ct.get_study_fields(
         search_expr="Coronavirus+COVID",
-        fields=["NCTId", "Condition", "BriefTitle"],
-        max_studies=500,
+        fields=["NCT Number", "Conditions", "Study Title"],
+        max_studies=1000,
         fmt="csv",
     )
 
