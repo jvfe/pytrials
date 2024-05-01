@@ -109,9 +109,3 @@ def test_study_fake_fmt():
             max_studies=50,
             fmt="I AM NOT A REAL FORMAT",
         )
-
-
-def test_study_count():
-    study_count = ct.get_study_count(search_expr="Coronavirus+COVID")
-
-    assert study_count > 2200

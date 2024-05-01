@@ -52,12 +52,6 @@ Basic Usage
         fmt="csv",
     )
 
-    # Get the count of studies related to Coronavirus and COVID.
-    # ClinicalTrials limits API queries to 1000 records
-    # Count of studies may be useful to build loops when you want to retrieve more than 1000 records
-
-    ct.get_study_count(search_expr="Coronavirus+COVID")
-
     # Read the csv data in Pandas
     import pandas as pd
 
