@@ -4,7 +4,7 @@ from pathlib import Path
 
 __author__ = """João Vitor F. Cavalcante"""
 __email__ = "jvfe@ufrn.edu.br"
-__version__ = "0.3.0"
+__version__ = "1.0.0"
 
 HERE = Path(__file__).parent.resolve()
 
