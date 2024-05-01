@@ -110,7 +110,9 @@ class ClinicalTrials:
             raise ValueError("The number of studies can only be between 1 and 1000")
         elif not set(fields).issubset(self.study_fields[fmt]):
             raise ValueError(
-                "One of the fields is not valid! Check the study_fields attribute for a list of valid ones."
+                "One of the fields is not valid!"
+                "Check the study_fields attribute for a list of valid ones."
+                "They are different depending on the return format, json or csv."
             )
         else:
             concat_fields = "|".join(fields)
