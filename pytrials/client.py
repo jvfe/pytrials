@@ -1,4 +1,6 @@
 from pytrials.utils import json_handler, csv_handler
+from pytrials import study_fields
+import csv
 
 
 class ClinicalTrials:
@@ -17,24 +19,32 @@ class ClinicalTrials:
     _BASE_URL = "https://clinicaltrials.gov/api/v2/"
     _INFO = "info/"
     _QUERY = "query/"
-    _JSON = "fmt=json"
-    _CSV = "fmt=csv"
+    _JSON = "format=json"
+    _CSV = "format=csv"
 
     def __init__(self):
         self.api_info = self.__api_info()
 
     @property
     def study_fields(self):
-        fields_list = json_handler(
-            f"{self._BASE_URL}{self._INFO}study_fields_list?{self._JSON}"
-        )
-        return fields_list["StudyFields"]["Fields"]
+        """List of all study fields you can use in your query."""
+
+        csv_fields = []
+        json_fields = []
+        with open(study_fields, "r") as f:
+            reader = csv.DictReader(f)
+            for row in reader:
+                csv_fields.append(row["Column Name"])
+                json_fields.append(row["Included Data Fields"].split("|"))
+
+        return {
+            "csv": csv_fields,
+            "json": [item for sublist in json_fields for item in sublist],
+        }
 
     def __api_info(self):
         """Returns information about the API"""
-        req = json_handler(
-            f"{self._BASE_URL}version"
-        )
+        req = json_handler(f"{self._BASE_URL}version")
         last_updated = req["dataTimestamp"]
 
         api_version = req["apiVersion"]

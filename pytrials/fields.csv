@@ -1,0 +1,31 @@
+Column Name,Included Data Fields
+NCT Number,NCTId
+Study Title,BriefTitle
+Study URL,NCTId
+Acronym,Acronym
+Study Status,OverallStatus
+Brief Summary,BriefSummary
+Study Results,HasResults
+Conditions,Condition
+Interventions,InterventionType|InterventionName
+Primary Outcome Measures,PrimaryOutcomeMeasure|PrimaryOutcomeDescription|PrimaryOutcomeTimeFrame
+Secondary Outcome Measures,SecondaryOutcomeMeasure|SecondaryOutcomeDescription|SecondaryOutcomeTimeFrame
+Other Outcome Measures,OtherOutcomeMeasure|OtherOutcomeDescription|OtherOutcomeTimeFrame
+Sponsor,LeadSponsorName
+Collaborators,CollaboratorName
+Sex,Sex
+Age,MinimumAge|MaximumAge|StdAge
+Phases,Phase
+Enrollment,EnrollmentCount
+Funder Type,LeadSponsorClass
+Study Type,StudyType
+Study Design,DesignAllocation|DesignInterventionModel|DesignMasking|DesignWhoMasked|DesignPrimaryPurpose
+Other IDs,OrgStudyId|SecondaryId
+Start Date,StartDate
+Primary Completion Date,PrimaryCompletionDate
+Completion Date,CompletionDate
+First Posted,StudyFirstPostDate
+Results First Posted,ResultsFirstSubmitDate
+Last Update Posted,LastUpdatePostDate
+Locations,LocationFacility|LocationCity|LocationState|LocationZip|LocationCountry
+Study Documents,NCTId|LargeDocLabel|LargeDocFilename
