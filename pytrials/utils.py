@@ -34,3 +34,18 @@ def csv_handler(url):
     records = list(cr)
 
     return records
+
+def enrollment_data(full_studies):
+    """Returns a subset dataframe with key columns for enrollment data.
+    Store the output of get_full_studies() from pytrials.client and use it as input here"""
+
+    import pandas as pd
+    studies_df = pd.DataFrame(full_studies[1:], columns = full_studies[0])
+
+    enrollment_df = studies_df[[
+        'NCT Number', 'Study Title', 'Study URL', 'Study Status', 'Enrollment', 'Start Date', 'Completion Date', 'Locations'
+        ]]
+    
+    filtered_df = enrollment_df[enrollment_df['Study Status'].isin(['ACTIVE_NOT_RECRUITING', 'TERMINATED', 'COMPLETED'])]
+
+    return filtered_df
